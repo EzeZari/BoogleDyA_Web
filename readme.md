@@ -1,7 +1,8 @@
 **Boogle**
+
 ***Introducción***
 Boggle es un juego de palabras en el que los jugadores intentan encontrar tantas palabras como puedan en una cuadrícula de 16 casillas (4x4) que contienen letras de forma aleatoria, dentro de un límite de tiempo establecido.
-*** Reglas ***
+***Reglas***
 El juego comienza al ordenarse las letras en la cuadrícula, momento que coincide con el inicio del temporizador (que puede setearse de 1, 2 o 3 minutos).
 ***Para buscar las palabras se deben tener en cuenta los siguientes criterios:***
 - Las palabras deben tener al menos tres letras.
