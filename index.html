@@ -9,12 +9,37 @@
 </head>
 
 <body>
-    <div class="modalInicio">
+    <div class="modalInicio" id="modalInicio">
         <h1>Bienvenido a Boogle</h1>
         <h2>Ingresa tu nombre</h2>
         <input type="text" id="nombreJugador" oninput="validarNombre()">
         <p id="mensaje"></p>
-        <button id="btnIngresar">Ingresar</button>
+        <button id="btnIngresar" disabled> Ingresar</button>
+    </div>
+
+    <div class="juegoBoogle" id="juegoBoogle">
+        <h1 id="saludoJugador"></h1>
+        <div class="gridBoogle" >
+            <div class="item"><button>1</button></div>
+            <div class="item"><button>2</button></div>
+            <div class="item"><button>3</button></div>
+            <div class="item"><button>4</button></div>
+            <div class="item"><button>5</button></div>
+            <div class="item"><button>6</button></div>
+            <div class="item"><button>7</button></div>
+            <div class="item"><button>8</button></div>
+            <div class="item"><button>9</button></div>
+            <div class="item"><button>10</button></div>
+            <div class="item"><button>11</button></div>
+            <div class="item"><button>12</button></div>
+            <div class="item"><button>13</button></div>
+            <div class="item"><button>14</button></div>
+            <div class="item"><button>15</button></div>
+            <div class="item"><button>16</button></div>
+        </div>
+
+    </div>
+    <div class="marcadores">
     </div>
 
     <script src="main.js"></script>

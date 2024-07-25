@@ -1,11 +1,14 @@
-var btnIngresar = document.getElementById("btnIngresar")
+var btnIngresar = document.getElementById("btnIngresar");
+var inputNombre = document.getElementById("nombreJugador").value;
+var juego = document.getElementById("juegoBoogle");
+var modalInicio = document.getElementById("modalInicio");
 
 function validarNombre() {
     var inputNombre = document.getElementById("nombreJugador").value;
-    
+
     if (inputNombre.length >= 3) {
         document.getElementById("mensaje").textContent = "";
-        btnIngresar.disabled= false;
+        btnIngresar.disabled = false;
     } else {
         document.getElementById("mensaje").textContent = "El nombre debe tener al menos 3 caracteres.";
         document.getElementById("mensaje").style.color = "red";
@@ -13,10 +16,16 @@ function validarNombre() {
     }
 }
 
-function recibirNombre(){
+function recibirNombre() {
     var inputNombre = document.getElementById("nombreJugador").value;
-    console.log(inputNombre)
-
+    var saludoJugador = document.getElementById("saludoJugador")
+    saludoJugador.innerHTML = `¡A jugar ${inputNombre}!`
+    abrirJuego();
 }
 
-btnIngresar.addEventListener("click",recibirNombre)
+function abrirJuego() {
+    modalInicio.style.display = "none";
+    juego.style.display = "block";
+}
+
+btnIngresar.addEventListener("click", recibirNombre)
