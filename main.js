@@ -26,6 +26,17 @@ function recibirNombre() {
 function abrirJuego() {
     modalInicio.style.display = "none";
     juego.style.display = "block";
+    asignarLetrasAleatorias();
 }
 
 btnIngresar.addEventListener("click", recibirNombre)
+
+function asignarLetrasAleatorias() {
+    const letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
+    const botones = document.querySelectorAll(".gridBoogle .item button");
+
+    botones.forEach(boton => {
+        const letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
+        boton.textContent = letraAleatoria;
+    });
+}

@@ -14,33 +14,41 @@
         <h2>Ingresa tu nombre</h2>
         <input type="text" id="nombreJugador" oninput="validarNombre()">
         <p id="mensaje"></p>
-        <button id="btnIngresar" disabled> Ingresar</button>
+        <button id="btnIngresar" disabled> Jugar </button>
     </div>
 
     <div class="juegoBoogle" id="juegoBoogle">
         <h1 id="saludoJugador"></h1>
         <div class="gridBoogle" >
-            <div class="item"><button>1</button></div>
-            <div class="item"><button>2</button></div>
-            <div class="item"><button>3</button></div>
-            <div class="item"><button>4</button></div>
-            <div class="item"><button>5</button></div>
-            <div class="item"><button>6</button></div>
-            <div class="item"><button>7</button></div>
-            <div class="item"><button>8</button></div>
-            <div class="item"><button>9</button></div>
-            <div class="item"><button>10</button></div>
-            <div class="item"><button>11</button></div>
-            <div class="item"><button>12</button></div>
-            <div class="item"><button>13</button></div>
-            <div class="item"><button>14</button></div>
-            <div class="item"><button>15</button></div>
-            <div class="item"><button>16</button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
+            <div class="item"><button></button></div>
         </div>
+        <button onclick="asignarLetrasAleatorias()">Rotar</button>
 
     </div>
     <div class="marcadores">
+        <div class="temporizador"></div>
+        <div class="ultimasPartidas"></div>
+        <div class="puntuacionActual"></div>
+        <div class="palabraFormacion"></div>
+        <div class="palabrasEncontradas"></div>
     </div>
+
+    <div class="modalFinPartida"></div>
 
     <script src="main.js"></script>
 </body>
