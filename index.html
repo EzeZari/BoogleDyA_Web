@@ -14,12 +14,18 @@
         <h2>Ingresa tu nombre</h2>
         <input type="text" id="nombreJugador" oninput="validarNombre()">
         <p id="mensaje"></p>
-        <button id="btnIngresar" disabled> Jugar </button>
+        <select name="tiempoJuego" id="tiempoJuego" onchange="eleccionTiempoJuego()">
+            <option value="" disabled selected>Selecciona el tiempo</option>
+            <option value="1">1 minuto</option>
+            <option value="2">2 minutos</option>
+            <option value="3">3 minutos</option>
+        </select>
+        <button id="btnIngresar" disabled > Jugar </button>
     </div>
 
     <div class="juegoBoogle" id="juegoBoogle">
         <h1 id="saludoJugador"></h1>
-        <div class="gridBoogle" >
+        <div class="gridBoogle">
             <div class="item"><button></button></div>
             <div class="item"><button></button></div>
             <div class="item"><button></button></div>
@@ -42,7 +48,7 @@
     </div>
     <div class="marcadores">
         <div class="temporizador" id="temporizador">
-            03:00
+        02:00
         </div>
         <div class="ultimasPartidas"></div>
         <div class="puntuacionActual"></div>
