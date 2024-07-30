@@ -157,27 +157,40 @@ function limpiarSeleccion() {
 
 async function verificarPalabraExistente(palabra) {
     try {
-        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`);
-        if (response.ok) {
-            const data = await response.json();
-            if (data && data.length > 0) {
-                console.log("Palabra existente");
-                document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra}`;
+        const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`;
+        const response = await fetch(url);
+
+        // if (!response.ok) {
+        //     console.error(Error en la solicitud: ${response.status});
+        //     document.querySelector(".palabraFormacion").textContent = Error en la solicitud: ${response.status};
+        //     return;
+        // }
+
+        const data = await response.json();
+        //console.log("Datos recibidos de la API:", data); // Para depurar
+        if (data && data.length > 0) {
+            const palabraApi = data[0].word; // Esto se hace porque sino no cuenta la longitud de la palabra obtenida de la API
+            const longitudPalabra = palabraApi.length; // Calcula la longitud de la palabra obtenida
+
+            if (longitudPalabra <= 2) {
+                document.querySelector(".palabraFormacion").textContent = `Palabra existente pero no cumple con el criterio de longitud: ${palabra}`;
+                console.log("Palabra existente pero demasiado corta");
             } else {
-                console.log("Palabra no existente");
-                document.querySelector(".palabraFormacion").textContent = `Palabra incorrecta: ${palabra}`;
+                sumarPuntos(longitudPalabra);
+                document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra} (${longitudPalabra} letras)`;
             }
         } else {
             console.log("Palabra no existente o error en la solicitud");
-            document.querySelector(".palabraFormacion").textContent = `Palabra no eistente: ${palabra}`;
+            puntos -= 1;
+            console.log(`Puntos: ${puntos}`);
+            document.querySelector(".palabraFormacion").textContent = `Palabra inexistente : ${palabra} (-1 punto) `;
         }
     } catch (error) {
         console.error("Error al verificar la palabra:", error);
+        document.querySelector(".palabraFormacion").textContent = `ERROR: ${error.message}`;
     }
 }
 
-document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
-document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
 function sumarPuntos(longitud) {
     if (longitud === 3 || longitud === 4) {
         puntos += 1;
@@ -199,28 +212,5 @@ function sumarPuntos(longitud) {
 
     }
 }
-
-
-async function verificarPalabraExistente(palabra) {
-    try {
-        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`);
-        if (response.ok) {
-            const data = await response.json();
-            if (data && data.length > 0) {
-                console.log("Palabra existente");
-                document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra}`;
-            } else {
-                console.log("Palabra no existente");
-                document.querySelector(".palabraFormacion").textContent = `Palabra incorrecta: ${palabra}`;
-            }
-        } else {
-            console.log("Palabra no existente o error en la solicitud");
-            document.querySelector(".palabraFormacion").textContent = `Palabra no eistente: ${palabra}`;
-        }
-    } catch (error) {
-        console.error("Error al verificar la palabra:", error);
-    }
-}
-
 document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
 document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
