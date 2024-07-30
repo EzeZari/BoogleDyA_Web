@@ -7,12 +7,10 @@ var eleccionTiempo = document.getElementById("tiempoJuego").value;
 var tiempodeJuego = 0;
 var seleccionando = false;
 var palabraFormada = "";
-<<<<<<< Updated upstream
-=======
 var puntos = [];
 var seleccionando = false;
 var palabraFormada = "";
->>>>>>> Stashed changes
+
 
 function validarNombre() {
     var inputNombre = document.getElementById("nombreJugador").value;
@@ -90,23 +88,20 @@ function eleccionTiempoJuego() {
 
 
 function asignarLetrasAleatorias() {
-<<<<<<< Updated upstream
-=======
+
     const letras = "bottle";
 }
 
 function asignarLetrasAleatorias() {
->>>>>>> Stashed changes
+
     const letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
     const botones = document.querySelectorAll(".gridBoogle .item button");
 
     botones.forEach(boton => {
         const letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
         boton.textContent = letraAleatoria;
-<<<<<<< Updated upstream
-=======
         boton.classList.remove("seleccionado");
->>>>>>> Stashed changes
+
         boton.classList.remove("seleccionado"); // Quitar selección previa
     });
 
@@ -181,10 +176,8 @@ async function verificarPalabraExistente(palabra) {
     }
 }
 
-<<<<<<< Updated upstream
 document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
 document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
-=======
 function sumarPuntos(longitud) {
     if (longitud === 3 || longitud === 4) {
         puntos += 1;
@@ -231,4 +224,3 @@ async function verificarPalabraExistente(palabra) {
 
 document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
 document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
->>>>>>> Stashed changes
