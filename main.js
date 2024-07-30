@@ -57,12 +57,12 @@ function iniciarTemporizador(duracion) {
             (segundos < 10 ? "0" + segundos : segundos);
 
         if (tiempoRestante <= 10) {
-            temporizador.style.color = "red" //Ponerlo en CSS
+            temporizador.style.color = "red" //TODO:Ponerlo en CSS
         }
         if (tiempoRestante <= 0) {
             clearInterval(intervalo);
             temporizador.textContent = "00:00";
-            // Agregar acción cuando el temporizador llegue a cero
+            // TODO:Agregar acción cuando el temporizador llegue a cero
         } else {
             tiempoRestante--;
         }
@@ -82,91 +82,86 @@ function eleccionTiempoJuego() {
     validarBoton();
 }
 
- function asignarLetrasAleatorias() {
-            const letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
-            const botones = document.querySelectorAll(".gridBoogle .item button");
+function asignarLetrasAleatorias() {
+    const letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
+    const botones = document.querySelectorAll(".gridBoogle .item button");
 
-            botones.forEach(boton => {
-                const letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
-                boton.textContent = letraAleatoria;
-                boton.classList.remove("seleccionado"); // Quitar selección previa
-            });
+    botones.forEach(boton => {
+        const letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
+        boton.textContent = letraAleatoria;
+        boton.classList.remove("seleccionado"); // Quitar selección previa
+    });
 
-            // Restablecer estado
+    // Restablecer estado
+    seleccionando = false;
+    limpiarSeleccion();
+}
+
+function letrasElegidas(event) {
+    if (event.target.tagName === "BUTTON") {
+        const boton = event.target;
+
+        if (!seleccionando) { //Si no esta activado la seleccion de letra
+            seleccionando = true;
+            boton.classList.add("seleccionado");
+            palabraFormada = boton.textContent;
+
+        } else if (boton.classList.contains("seleccionado")) {
             seleccionando = false;
+            verificarPalabraExistente(palabraFormada);
             limpiarSeleccion();
+
+        } else { //Se va agregando las letras a la palabra en pantalla.
+            boton.classList.add("seleccionado");
+            palabraFormada += boton.textContent;
+
         }
 
-        function letrasElegidas(event) {
-            if (event.target.tagName === "BUTTON") {
-                const boton = event.target;
+        document.querySelector(".palabraFormacion").textContent = palabraFormada;
+    }
+}
 
-                if (!seleccionando) {
-                    // Iniciar la selección
-                    seleccionando = true;
-                    boton.classList.add("seleccionado");
-                    palabraFormada = boton.textContent;
-                } else if (boton.classList.contains("seleccionado")) {
-                    // Terminar la selección y verificar palabra
-                    seleccionando = false;
-                    verificarPalabraExistente(palabraFormada);
-                    limpiarSeleccion();
-                } else {
-                    // Agregar letra a la palabra formada
-                    boton.classList.add("seleccionado");
-                    palabraFormada += boton.textContent;
-                }
+function letraHover(event) {
+    if (event.target.tagName === "BUTTON" && seleccionando) { //event.target.tagName === "BUTTON" Significa que verifica si se hizo click sobre un boton.
+        const boton = event.target;
 
-                // Actualizar la palabra formada en pantalla
-                document.querySelector(".palabraFormacion").textContent = palabraFormada;
-            }
-        }
+        if (!boton.classList.contains("seleccionado")) {
+            boton.classList.add("seleccionado"); // Agregar letra a la palabra formada
+            palabraFormada += boton.textContent;
 
-        function letraHover(event) {
-            if (event.target.tagName === "BUTTON" && seleccionando) {
-                const boton = event.target;
-
-                if (!boton.classList.contains("seleccionado")) {
-                    // Agregar letra a la palabra formada
-                    boton.classList.add("seleccionado");
-                    palabraFormada += boton.textContent;
-
-                    // Actualizar la palabra formada en pantalla
-                    document.querySelector(".palabraFormacion").textContent = palabraFormada;
-                }
-            }
-        }
-
-        function limpiarSeleccion() {
-            // Limpiar selección en todos los botones
-            document.querySelectorAll(".gridBoogle .item button").forEach(boton => {
-                boton.classList.remove("seleccionado");
-            });
-            // Limpiar palabra formada
-            palabraFormada = "";
             document.querySelector(".palabraFormacion").textContent = palabraFormada;
         }
+    }
+}
 
-        async function verificarPalabraExistente(palabra) {
-            try {
-                const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data && data.length > 0) {
-                        console.log("Palabra existente");
-                        document.querySelector(".palabraFormacion").textContent = "Palabra existente: " + palabra;
-                    } else {
-                        console.log("Palabra no existente");
-                        document.querySelector(".palabraFormacion").textContent = "Palabra no existente: " + palabra;
-                    }
-                } else {
-                    console.log("Palabra no existente o error en la solicitud");
-                    document.querySelector(".palabraFormacion").textContent = "Palabra no existente: " + palabra;
-                }
-            } catch (error) {
-                console.error("Error al verificar la palabra:", error);
+function limpiarSeleccion() {
+    document.querySelectorAll(".gridBoogle .item button").forEach(boton => {
+        boton.classList.remove("seleccionado");
+    });
+    palabraFormada = "";
+    document.querySelector(".palabraFormacion").textContent = palabraFormada;
+}
+
+async function verificarPalabraExistente(palabra) {
+    try {
+        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data && data.length > 0) {
+                console.log("Palabra existente");
+                document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra}`;
+            } else {
+                console.log("Palabra no existente");
+                document.querySelector(".palabraFormacion").textContent = `Palabra incorrecta: ${palabra}`;
             }
+        } else {
+            console.log("Palabra no existente o error en la solicitud");
+            document.querySelector(".palabraFormacion").textContent = `Palabra no eistente: ${palabra}`;
         }
+    } catch (error) {
+        console.error("Error al verificar la palabra:", error);
+    }
+}
 
-        document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
-        document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
+document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
+document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
