@@ -5,11 +5,13 @@ var modalInicio = document.getElementById("modalInicio");
 var temporizador = document.getElementById("temporizador");
 var eleccionTiempo = document.getElementById("tiempoJuego").value;
 var tiempodeJuego = 0;
+var seleccionando = false;
+var palabraFormada = "";
 
 function validarNombre() {
     var inputNombre = document.getElementById("nombreJugador").value;
-    
-    if (inputNombre.length >= 3 ) {
+
+    if (inputNombre.length >= 3) {
         document.getElementById("mensaje").textContent = "";
     } else {
         document.getElementById("mensaje").textContent = "El nombre debe tener al menos 3 caracteres.";
@@ -38,31 +40,22 @@ function abrirJuego() {
     juego.style.display = "block";
     recibirNombre();
     asignarLetrasAleatorias();
-    iniciarTemporizador(tiempodeJuego); 
+    iniciarTemporizador(tiempodeJuego);
 }
 
-btnIngresar.addEventListener("click", abrirJuego) 
+btnIngresar.addEventListener("click", abrirJuego)
 
-function asignarLetrasAleatorias() {
-    const letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
-    const botones = document.querySelectorAll(".gridBoogle .item button");
-    
-    botones.forEach(boton => {
-        const letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
-        boton.textContent = letraAleatoria;
-    });
-}
 
 function iniciarTemporizador(duracion) {
     var tiempoRestante = duracion;
     var intervalo = setInterval(() => {
         var minutos = Math.floor(tiempoRestante / 60);
         var segundos = tiempoRestante % 60;
-        
+
         temporizador.textContent =
-        (minutos < 10 ? "0" + minutos : minutos) + ":" +
-        (segundos < 10 ? "0" + segundos : segundos);
-        
+            (minutos < 10 ? "0" + minutos : minutos) + ":" +
+            (segundos < 10 ? "0" + segundos : segundos);
+
         if (tiempoRestante <= 10) {
             temporizador.style.color = "red" //Ponerlo en CSS
         }
@@ -76,16 +69,104 @@ function iniciarTemporizador(duracion) {
     }, 1000);
 }
 
-
 function eleccionTiempoJuego() {
     eleccionTiempo = document.getElementById("tiempoJuego").value;
-    
+
     if (eleccionTiempo == "1") {
         tiempodeJuego = 60;
     } else if (eleccionTiempo == "2") {
         tiempodeJuego = 120;
     } else if (eleccionTiempo == "3") {
         tiempodeJuego = 180;
-    } 
+    }
     validarBoton();
 }
+
+ function asignarLetrasAleatorias() {
+            const letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
+            const botones = document.querySelectorAll(".gridBoogle .item button");
+
+            botones.forEach(boton => {
+                const letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
+                boton.textContent = letraAleatoria;
+                boton.classList.remove("seleccionado"); // Quitar selección previa
+            });
+
+            // Restablecer estado
+            seleccionando = false;
+            limpiarSeleccion();
+        }
+
+        function letrasElegidas(event) {
+            if (event.target.tagName === "BUTTON") {
+                const boton = event.target;
+
+                if (!seleccionando) {
+                    // Iniciar la selección
+                    seleccionando = true;
+                    boton.classList.add("seleccionado");
+                    palabraFormada = boton.textContent;
+                } else if (boton.classList.contains("seleccionado")) {
+                    // Terminar la selección y verificar palabra
+                    seleccionando = false;
+                    verificarPalabraExistente(palabraFormada);
+                    limpiarSeleccion();
+                } else {
+                    // Agregar letra a la palabra formada
+                    boton.classList.add("seleccionado");
+                    palabraFormada += boton.textContent;
+                }
+
+                // Actualizar la palabra formada en pantalla
+                document.querySelector(".palabraFormacion").textContent = palabraFormada;
+            }
+        }
+
+        function letraHover(event) {
+            if (event.target.tagName === "BUTTON" && seleccionando) {
+                const boton = event.target;
+
+                if (!boton.classList.contains("seleccionado")) {
+                    // Agregar letra a la palabra formada
+                    boton.classList.add("seleccionado");
+                    palabraFormada += boton.textContent;
+
+                    // Actualizar la palabra formada en pantalla
+                    document.querySelector(".palabraFormacion").textContent = palabraFormada;
+                }
+            }
+        }
+
+        function limpiarSeleccion() {
+            // Limpiar selección en todos los botones
+            document.querySelectorAll(".gridBoogle .item button").forEach(boton => {
+                boton.classList.remove("seleccionado");
+            });
+            // Limpiar palabra formada
+            palabraFormada = "";
+            document.querySelector(".palabraFormacion").textContent = palabraFormada;
+        }
+
+        async function verificarPalabraExistente(palabra) {
+            try {
+                const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && data.length > 0) {
+                        console.log("Palabra existente");
+                        document.querySelector(".palabraFormacion").textContent = "Palabra existente: " + palabra;
+                    } else {
+                        console.log("Palabra no existente");
+                        document.querySelector(".palabraFormacion").textContent = "Palabra no existente: " + palabra;
+                    }
+                } else {
+                    console.log("Palabra no existente o error en la solicitud");
+                    document.querySelector(".palabraFormacion").textContent = "Palabra no existente: " + palabra;
+                }
+            } catch (error) {
+                console.error("Error al verificar la palabra:", error);
+            }
+        }
+
+        document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
+        document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
