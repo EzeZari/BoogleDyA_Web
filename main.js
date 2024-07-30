@@ -7,6 +7,12 @@ var eleccionTiempo = document.getElementById("tiempoJuego").value;
 var tiempodeJuego = 0;
 var seleccionando = false;
 var palabraFormada = "";
+<<<<<<< Updated upstream
+=======
+var puntos = [];
+var seleccionando = false;
+var palabraFormada = "";
+>>>>>>> Stashed changes
 
 function validarNombre() {
     var inputNombre = document.getElementById("nombreJugador").value;
@@ -82,13 +88,25 @@ function eleccionTiempoJuego() {
     validarBoton();
 }
 
+
 function asignarLetrasAleatorias() {
+<<<<<<< Updated upstream
+=======
+    const letras = "bottle";
+}
+
+function asignarLetrasAleatorias() {
+>>>>>>> Stashed changes
     const letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
     const botones = document.querySelectorAll(".gridBoogle .item button");
 
     botones.forEach(boton => {
         const letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
         boton.textContent = letraAleatoria;
+<<<<<<< Updated upstream
+=======
+        boton.classList.remove("seleccionado");
+>>>>>>> Stashed changes
         boton.classList.remove("seleccionado"); // Quitar selección previa
     });
 
@@ -163,5 +181,54 @@ async function verificarPalabraExistente(palabra) {
     }
 }
 
+<<<<<<< Updated upstream
 document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
 document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
+=======
+function sumarPuntos(longitud) {
+    if (longitud === 3 || longitud === 4) {
+        puntos += 1;
+        console.log(`Puntos: ${puntos}`);
+    } else if (longitud === 5) {
+        puntos += 2;
+        console.log(`Puntos: ${puntos}`);
+    } else if (longitud === 6) {
+        puntos += 3;
+        console.log(`Puntos: ${puntos}`);
+    } else if (longitud === 7) {
+        puntos += 5;
+        console.log(`Puntos: ${puntos}`);
+    } else if (longitud >= 8) {
+        puntos += 11;
+        console.log(`Puntos: ${puntos}`);
+    } else {
+        console.log("Palabra existente pero no cumple con el criterio de longitud");
+
+    }
+}
+
+
+async function verificarPalabraExistente(palabra) {
+    try {
+        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data && data.length > 0) {
+                console.log("Palabra existente");
+                document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra}`;
+            } else {
+                console.log("Palabra no existente");
+                document.querySelector(".palabraFormacion").textContent = `Palabra incorrecta: ${palabra}`;
+            }
+        } else {
+            console.log("Palabra no existente o error en la solicitud");
+            document.querySelector(".palabraFormacion").textContent = `Palabra no eistente: ${palabra}`;
+        }
+    } catch (error) {
+        console.error("Error al verificar la palabra:", error);
+    }
+}
+
+document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
+document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
+>>>>>>> Stashed changes
