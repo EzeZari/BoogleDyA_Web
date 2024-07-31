@@ -6,10 +6,8 @@ var temporizador = document.getElementById("temporizador");
 var eleccionTiempo = document.getElementById("tiempoJuego").value;
 var tiempodeJuego = 0;
 var seleccionando = false;
-var palabraFormada = "";
+var palabraFormada = [];
 var puntos = 0;
-var seleccionando = false;
-var palabraFormada = "";
 
 
 function validarNombre() {
@@ -84,12 +82,6 @@ function eleccionTiempoJuego() {
         tiempodeJuego = 180;
     }
     validarBoton();
-}
-
-
-function asignarLetrasAleatorias() {
-
-    const letras = "bottle";
 }
 
 function asignarLetrasAleatorias() {
@@ -174,6 +166,7 @@ async function verificarPalabraExistente(palabra) {
                 sumarPuntos(longitudPalabra);
                 document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra} (${longitudPalabra} letras)`;
                 document.querySelector(".puntuacionActual").textContent = `Puntuacion: ${puntos}`
+                agregarPalabraFormada(palabra)
             }
         } else {
             puntos -= 1;
@@ -204,4 +197,11 @@ function sumarPuntos(longitud) {
 function actualizarPuntuacion() {
     document.querySelector(".puntuacionActual").textContent = `Puntuacion: ${puntos}`;
     console.log(`Puntos: ${puntos}`);
+}
+
+function agregarPalabraFormada(palabra) {
+    const palabrasEncontradas = document.querySelector(".palabrasEncontradas");
+    const palabraElemento = document.createElement("p");
+    palabraElemento.textContent = palabra;
+    palabrasEncontradas.appendChild(palabraElemento);
 }
