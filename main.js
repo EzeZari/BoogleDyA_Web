@@ -87,7 +87,7 @@ function eleccionTiempoJuego() {
 }
 
 function asignarLetrasAleatorias() {
-
+    marcadores.style.display = "block"
     const letras = "TOOh";
     const botones = document.querySelectorAll(".gridBoogle .item button");
 
@@ -224,6 +224,8 @@ function finDePartida() {
     }
     const minutos = Math.floor(tiempodeJuego / 60); 
     document.querySelector(".tiempoJugado").textContent = `Tiempo jugado: ${minutos} minuto`;
+
+    palabrasEncontradas = [];
 }
 
 function volverInicio() {
@@ -231,5 +233,8 @@ function volverInicio() {
     juego.style.display = "none";
     marcadores.style.display = "none"
     modalFinDeJuego.style.display = "none"
+
+    document.querySelector(".palabrasEncontradas").textContent = '';
+    puntos = 0
 }
 document.querySelector(".btnVolverAJugar").addEventListener("click", volverInicio)
