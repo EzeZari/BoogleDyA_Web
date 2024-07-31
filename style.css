@@ -1,8 +1,8 @@
-*{
+* {
     background-color: white;
 }
 
-.juegoBoogle{
+.juegoBoogle {
     /* display: none; */
     display: flex;
     flex-direction: column;
@@ -10,21 +10,24 @@
     margin: 20px;
 }
 
-.modalInicio{
-    display: none;
+.modalInicio {
+    /* display: none; */
 }
-.gridBoogle{
+
+.gridBoogle {
     display: flex;
     flex-wrap: wrap;
     width: 400px;
 }
+
 .item {
-    flex: 1 0 25%; /* Hace que cada botón ocupe el 25% del ancho del contenedor (4 botones por fila) */
+    flex: 1 0 25%;
+    /* Hace que cada botón ocupe el 25% del ancho del contenedor (4 botones por fila) */
     box-sizing: border-box;
     padding: 5px;
 }
 
-#mensaje{
+#mensaje {
     color: red;
 }
 
@@ -42,4 +45,8 @@
 .palabraFormacion {
     font-size: 1.5rem;
     margin-top: 20px;
+}
+
+.modalFinalPartida {
+    display: none;
 }

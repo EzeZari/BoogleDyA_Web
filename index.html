@@ -48,17 +48,26 @@
       </div>
       <button onclick="asignarLetrasAleatorias()">Rotar</button>
     </div>
-    <div class="marcadores">
+
+    <div class="marcadores" id="marcadores">
       <div class="temporizador" id="temporizador">02:00</div>
       <div class="ultimasPartidas"></div>
       <div class="puntuacionActual">
         Puntuacion: <span class="numPuntuacion">0</span>
       </div>
       <div class="palabraFormacion"></div>
-      <div class="palabrasEncontradas"></div>
+      <div class="palabrasEncontradas">
+        <div class="marcoPalabrasEncontradas"><span>Palabras</span><span> Puntos</span></div>
+      </div>
     </div>
 
-    <div class="modalFinPartida"></div>
+<div class="modalFinalPartida" id="modalFinalPartida">
+  <h1 class="puntuacionFInal">Su puntuacion es: </h1>
+  <p class="palabrasFormadasFinal">Palabraas formadas:</p>
+  <p class="tiempoJugado">Tiempo jugado: </p>
+  <button class="btnVolverAJugar">Volver a Jugar</button>
+</div>
+
 
     <script src="main.js"></script>
   </body>
