@@ -1,64 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Boogle</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="modalInicio" id="modalInicio">
-        <h1>Bienvenido a Boogle</h1>
-        <h2>Ingresa tu nombre</h2>
-        <input type="text" id="nombreJugador" oninput="validarNombre()">
-        <p id="mensaje"></p>
-        <select name="tiempoJuego" id="tiempoJuego" onchange="eleccionTiempoJuego()">
-            <option value="" disabled selected>Selecciona el tiempo</option>
-            <option value="1">1 minuto</option>
-            <option value="2">2 minutos</option>
-            <option value="3">3 minutos</option>
-        </select>
-        <button id="btnIngresar" disabled> Jugar </button>
+      <h1>Bienvenido a Boogle</h1>
+      <h2>Ingresa tu nombre</h2>
+      <input type="text" id="nombreJugador" oninput="validarNombre()" />
+      <p id="mensaje"></p>
+      <select
+        name="tiempoJuego"
+        id="tiempoJuego"
+        onchange="eleccionTiempoJuego()"
+      >
+        <option value="" disabled selected>Selecciona el tiempo</option>
+        <option value="1">1 minuto</option>
+        <option value="2">2 minutos</option>
+        <option value="3">3 minutos</option>
+      </select>
+      <button id="btnIngresar" disabled>Jugar</button>
     </div>
 
     <div class="juegoBoogle" id="juegoBoogle">
-        <h1 id="saludoJugador"></h1>
-        <div class="gridBoogle" id="gridBoogle">
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-            <div class="item"><button></button></div>
-        </div>
-        <button onclick="asignarLetrasAleatorias()">Rotar</button>
-
+      <h1 id="saludoJugador"></h1>
+      <div class="gridBoogle" id="gridBoogle">
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+      </div>
+      <button onclick="asignarLetrasAleatorias()">Rotar</button>
     </div>
     <div class="marcadores">
-        <div class="temporizador" id="temporizador">
-            02:00
-        </div>
-        <div class="ultimasPartidas"></div>
-        <div class="puntuacionActual"></div>
-        <div class="palabraFormacion"></div>
-        <div class="palabrasEncontradas"></div>
+      <div class="temporizador" id="temporizador">02:00</div>
+      <div class="ultimasPartidas"></div>
+      <div class="puntuacionActual">
+        Puntuacion: <span class="numPuntuacion">0</span>
+      </div>
+      <div class="palabraFormacion"></div>
+      <div class="palabrasEncontradas"></div>
     </div>
 
     <div class="modalFinPartida"></div>
 
     <script src="main.js"></script>
-</body>
-
+  </body>
 </html>

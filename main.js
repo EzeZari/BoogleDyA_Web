@@ -7,7 +7,7 @@ var eleccionTiempo = document.getElementById("tiempoJuego").value;
 var tiempodeJuego = 0;
 var seleccionando = false;
 var palabraFormada = "";
-var puntos = [];
+var puntos = 0;
 var seleccionando = false;
 var palabraFormada = "";
 
@@ -94,7 +94,7 @@ function asignarLetrasAleatorias() {
 
 function asignarLetrasAleatorias() {
 
-    const letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
+    const letras = "TOOh";
     const botones = document.querySelectorAll(".gridBoogle .item button");
 
     botones.forEach(boton => {
@@ -141,11 +141,13 @@ function letraHover(event) {
         if (!boton.classList.contains("seleccionado")) {
             boton.classList.add("seleccionado"); // Agregar letra a la palabra formada
             palabraFormada += boton.textContent;
-
+            
             document.querySelector(".palabraFormacion").textContent = palabraFormada;
         }
     }
 }
+document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
+document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
 
 function limpiarSeleccion() {
     document.querySelectorAll(".gridBoogle .item button").forEach(boton => {
@@ -159,58 +161,47 @@ async function verificarPalabraExistente(palabra) {
     try {
         const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`;
         const response = await fetch(url);
-
-        // if (!response.ok) {
-        //     console.error(Error en la solicitud: ${response.status});
-        //     document.querySelector(".palabraFormacion").textContent = Error en la solicitud: ${response.status};
-        //     return;
-        // }
-
         const data = await response.json();
-        //console.log("Datos recibidos de la API:", data); // Para depurar
+
+
         if (data && data.length > 0) {
             const palabraApi = data[0].word; // Esto se hace porque sino no cuenta la longitud de la palabra obtenida de la API
             const longitudPalabra = palabraApi.length; // Calcula la longitud de la palabra obtenida
 
             if (longitudPalabra <= 2) {
-                document.querySelector(".palabraFormacion").textContent = `Palabra existente pero no cumple con el criterio de longitud: ${palabra}`;
-                console.log("Palabra existente pero demasiado corta");
+                document.querySelector(".palabraFormacion").textContent = `Palabra existente, pero demasiado corta: (+2 letras) ${palabra}`;
             } else {
                 sumarPuntos(longitudPalabra);
                 document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra} (${longitudPalabra} letras)`;
+                document.querySelector(".puntuacionActual").textContent = `Puntuacion: ${puntos}`
             }
         } else {
-            console.log("Palabra no existente o error en la solicitud");
             puntos -= 1;
-            console.log(`Puntos: ${puntos}`);
+            actualizarPuntuacion();
             document.querySelector(".palabraFormacion").textContent = `Palabra inexistente : ${palabra} (-1 punto) `;
         }
     } catch (error) {
-        console.error("Error al verificar la palabra:", error);
         document.querySelector(".palabraFormacion").textContent = `ERROR: ${error.message}`;
     }
 }
 
 function sumarPuntos(longitud) {
+
     if (longitud === 3 || longitud === 4) {
         puntos += 1;
-        console.log(`Puntos: ${puntos}`);
     } else if (longitud === 5) {
         puntos += 2;
-        console.log(`Puntos: ${puntos}`);
     } else if (longitud === 6) {
         puntos += 3;
-        console.log(`Puntos: ${puntos}`);
     } else if (longitud === 7) {
         puntos += 5;
-        console.log(`Puntos: ${puntos}`);
     } else if (longitud >= 8) {
         puntos += 11;
-        console.log(`Puntos: ${puntos}`);
-    } else {
-        console.log("Palabra existente pero no cumple con el criterio de longitud");
-
-    }
+    } 
+    actualizarPuntuacion();
 }
-document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
-document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
+
+function actualizarPuntuacion() {
+    document.querySelector(".puntuacionActual").textContent = `Puntuacion: ${puntos}`;
+    console.log(`Puntos: ${puntos}`);
+}
