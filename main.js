@@ -88,6 +88,7 @@ function eleccionTiempoJuego() {
 
 function asignarLetrasAleatorias() {
     marcadores.style.display = "block"
+
     const letras = "TOOh";
     const botones = document.querySelectorAll(".gridBoogle .item button");
 
@@ -200,7 +201,6 @@ function sumarPuntos(longitud) {
 
 function actualizarPuntuacion() {
     document.querySelector(".puntuacionActual").textContent = `Puntuacion: ${puntos}`;
-    console.log(`Puntos: ${puntos}`);
 }
 
 function agregarPalabraFormada(palabra, puntosObtenidos) {
@@ -225,6 +225,19 @@ function finDePartida() {
     const minutos = Math.floor(tiempodeJuego / 60); 
     document.querySelector(".tiempoJugado").textContent = `Tiempo jugado: ${minutos} minuto`;
 
+    const fechaActual = new Date().toLocaleString();
+    document.querySelector(".fechaPartida").textContent = `Fecha y hora de la partida: ${fechaActual}`;
+    const inputNombre = document.getElementById("nombreJugador").value;
+
+    const resultados = {
+        nombre: inputNombre,
+        puntos: puntos,
+        fecha: fechaActual
+    };
+    const historialPartidas = JSON.parse(localStorage.getItem('historialPartidas')) || [];
+    historialPartidas.push(resultados);
+    localStorage.setItem('historialPartidas', JSON.stringify(historialPartidas));
+
     palabrasEncontradas = [];
 }
 
@@ -238,3 +251,18 @@ function volverInicio() {
     puntos = 0
 }
 document.querySelector(".btnVolverAJugar").addEventListener("click", volverInicio)
+
+function mostrarHistorialPartidas() {
+    const historialPartidas = JSON.parse(localStorage.getItem('historialPartidas')) || [];
+    const historialElemento = document.querySelector(".historialPartidas");
+
+    if (historialPartidas.length > 0) {
+        historialElemento.innerHTML = historialPartidas.map(partida => {
+            return `<p>Nombre: ${partida.nombre}, Puntos: ${partida.puntos}, Fecha: ${partida.fecha}</p>`;
+        }).join('');
+    } else {
+        historialElemento.innerHTML = 'No hay partidas guardadas.';
+    }
+}
+
+document.querySelector(".btnhistorialPartidas").addEventListener("click", mostrarHistorialPartidas);

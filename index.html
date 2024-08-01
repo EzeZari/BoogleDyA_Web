@@ -1,74 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Boogle</title>
-  </head>
 
-  <body>
-    <div class="modalInicio" id="modalInicio">
-      <h1>Bienvenido a Boogle</h1>
-      <h2>Ingresa tu nombre</h2>
-      <input type="text" id="nombreJugador" oninput="validarNombre()" />
-      <p id="mensaje"></p>
-      <select
-        name="tiempoJuego"
-        id="tiempoJuego"
-        onchange="eleccionTiempoJuego()"
-      >
-        <option value="" disabled selected>Selecciona el tiempo</option>
-        <option value="1">1 minuto</option>
-        <option value="2">2 minutos</option>
-        <option value="3">3 minutos</option>
-      </select>
-      <button id="btnIngresar" disabled>Jugar</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Boogle</title>
+</head>
+
+<body>
+  <div class="modalInicio" id="modalInicio">
+    <h1>Bienvenido a Boogle</h1>
+    <h2>Ingresa tu nombre</h2>
+    <input type="text" id="nombreJugador" oninput="validarNombre()" />
+    <p id="mensaje"></p>
+    <select name="tiempoJuego" id="tiempoJuego" onchange="eleccionTiempoJuego()">
+      <option value="" disabled selected>Selecciona el tiempo</option>
+      <option value="1">1 minuto</option>
+      <option value="2">2 minutos</option>
+      <option value="3">3 minutos</option>
+    </select>
+    <button id="btnIngresar" disabled>Jugar</button>
+  </div>
+
+  <div class="juegoBoogle" id="juegoBoogle">
+    <h1 id="saludoJugador"></h1>
+    <div class="gridBoogle" id="gridBoogle">
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
+      <div class="item"><button></button></div>
     </div>
+    <button onclick="asignarLetrasAleatorias()">Rotar</button>
+  </div>
 
-    <div class="juegoBoogle" id="juegoBoogle">
-      <h1 id="saludoJugador"></h1>
-      <div class="gridBoogle" id="gridBoogle">
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-        <div class="item"><button></button></div>
-      </div>
-      <button onclick="asignarLetrasAleatorias()">Rotar</button>
+  <div class="marcadores" id="marcadores">
+    <div class="temporizador" id="temporizador">02:00</div>
+    <div class="ultimasPartidas"></div>
+    <div class="puntuacionActual">
+      Puntuacion: <span class="numPuntuacion">0</span>
     </div>
-
-    <div class="marcadores" id="marcadores">
-      <div class="temporizador" id="temporizador">02:00</div>
-      <div class="ultimasPartidas"></div>
-      <div class="puntuacionActual">
-        Puntuacion: <span class="numPuntuacion">0</span>
-      </div>
-      <div class="palabraFormacion"></div>
-      <div class="palabrasEncontradas">
-        <div class="marcoPalabrasEncontradas"><span>Palabras</span><span> Puntos</span></div>
-      </div>
+    <div class="palabraFormacion"></div>
+    <div class="palabrasEncontradas">
+      <div class="marcoPalabrasEncontradas"><span>Palabras</span><span> Puntos</span></div>
     </div>
+  </div>
 
-<div class="modalFinalPartida" id="modalFinalPartida">
-  <h1 class="puntuacionFInal">Su puntuacion es: </h1>
-  <p class="palabrasFormadasFinal">Palabraas formadas:</p>
-  <p class="tiempoJugado">Tiempo jugado: </p>
-  <button class="btnVolverAJugar">Volver a Jugar</button>
-</div>
+  <div class="modalFinalPartida" id="modalFinalPartida">
+    <h1 class="puntuacionFInal">Su puntuacion es: </h1>
+    <p class="palabrasFormadasFinal">Palabraas formadas:</p>
+    <p class="tiempoJugado">Tiempo jugado: </p>
+    <div class="fechaPartida"></div>
+    <button class="btnVolverAJugar">Volver a Jugar</button>
+  </div>
+
+  <div class="historialPartidas">
+    <button class="btnhistorialPartidas">Historial de partidas</button>
+  </div>
 
 
-    <script src="main.js"></script>
-  </body>
+  <script src="main.js"></script>
+</body>
+
 </html>
