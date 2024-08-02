@@ -153,6 +153,12 @@ function limpiarSeleccion() {
 }
 
 async function verificarPalabraExistente(palabra) {
+    // Verificar si la palabra ya ha sido encontrada
+    if (palabrasEncontradas.includes(palabra)) {
+        document.querySelector(".palabraFormacion").textContent = `Palabra repetida: ${palabra} (sin puntos)`;
+        return;
+    }
+
     try {
         const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`;
         const response = await fetch(url);
@@ -222,7 +228,7 @@ function finDePartida() {
     } else {
         palabrasElemento.innerHTML = 'No se encontraron palabras.';
     }
-    const minutos = Math.floor(tiempodeJuego / 60); 
+    const minutos = Math.floor(tiempodeJuego / 60);
     document.querySelector(".tiempoJugado").textContent = `Tiempo jugado: ${minutos} minuto`;
 
     const fechaActual = new Date().toLocaleString();
@@ -257,6 +263,7 @@ function mostrarHistorialPartidas() {
     const historialElemento = document.querySelector(".historialPartidas");
 
     if (historialPartidas.length > 0) {
+        historialPartidas.sort((a, b) => b.puntos - a.puntos); //Ordenamos de mayor a menor.
         historialElemento.innerHTML = historialPartidas.map(partida => {
             return `<p>Nombre: ${partida.nombre}, Puntos: ${partida.puntos}, Fecha: ${partida.fecha}</p>`;
         }).join('');
