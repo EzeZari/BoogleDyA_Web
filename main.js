@@ -105,24 +105,45 @@ function asignarLetrasAleatorias() {
     limpiarSeleccion();
 }
 
+function esAdyacente(botonActual) {
+    if (!ultimaLetraSeleccionada) return true;
+
+    const grid = document.querySelector(".gridBoogle");
+    const botones = Array.from(grid.querySelectorAll(".item button"));
+
+    const indexActual = botones.indexOf(botonActual);
+    const indexUltimo = botones.indexOf(ultimaLetraSeleccionada);
+
+    const filaActual = Math.floor(indexActual / 4);
+    const colActual = indexActual % 4;
+    const filaUltimo = Math.floor(indexUltimo / 4);
+    const colUltimo = indexUltimo % 4;
+
+    const filaDiff = Math.abs(filaActual - filaUltimo);
+    const colDiff = Math.abs(colActual - colUltimo);
+
+    return (filaDiff <= 1 && colDiff <= 1);
+}
+
 function letrasElegidas(event) {
     if (event.target.tagName === "BUTTON") {
         const boton = event.target;
 
-        if (!seleccionando) { //Si no esta activado la seleccion de letra
+        if (!seleccionando) { // Si no está activada la selección de letra
             seleccionando = true;
             boton.classList.add("seleccionado");
             palabraFormada = boton.textContent;
+            ultimaLetraSeleccionada = boton;
 
         } else if (boton.classList.contains("seleccionado")) {
             seleccionando = false;
             verificarPalabraExistente(palabraFormada);
             limpiarSeleccion();
 
-        } else { //Se va agregando las letras a la palabra en pantalla.
+        } else if (esAdyacente(boton)) { // Verificar si el botón es adyacente
             boton.classList.add("seleccionado");
             palabraFormada += boton.textContent;
-
+            ultimaLetraSeleccionada = boton;
         }
 
         document.querySelector(".palabraFormacion").textContent = palabraFormada;
@@ -133,9 +154,10 @@ function letraHover(event) {
     if (event.target.tagName === "BUTTON" && seleccionando) { //event.target.tagName === "BUTTON" Significa que verifica si se hizo click sobre un boton.
         const boton = event.target;
 
-        if (!boton.classList.contains("seleccionado")) {
+        if (!boton.classList.contains("seleccionado") && esAdyacente(boton)) {
             boton.classList.add("seleccionado"); // Agregar letra a la palabra formada
             palabraFormada += boton.textContent;
+            ultimaLetraSeleccionada = boton;
 
             document.querySelector(".palabraFormacion").textContent = palabraFormada;
         }
@@ -149,6 +171,7 @@ function limpiarSeleccion() {
         boton.classList.remove("seleccionado");
     });
     palabraFormada = "";
+    ultimaLetraSeleccionada = null;
     document.querySelector(".palabraFormacion").textContent = palabraFormada;
 }
 
@@ -255,6 +278,7 @@ function volverInicio() {
 
     document.querySelector(".palabrasEncontradas").textContent = '';
     puntos = 0
+    actualizarPuntuacion();
 }
 document.querySelector(".btnVolverAJugar").addEventListener("click", volverInicio)
 
