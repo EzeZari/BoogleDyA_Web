@@ -26,7 +26,7 @@ function validarMensaje() {
     } else {
         errorMensaje.textContent = '';
         return true;
-    } 
+    }
 }
 
 function validarNombre() {

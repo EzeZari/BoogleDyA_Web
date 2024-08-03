@@ -1,21 +1,19 @@
 var btnIngresar = document.getElementById("btnIngresar");
-var inputNombre = document.getElementById("nombreJugador").value;
+var inputNombre = document.getElementById("nombreJugador");
 var juego = document.getElementById("juegoBoogle");
 var modalInicio = document.getElementById("modalInicio");
 var temporizador = document.getElementById("temporizador");
-var eleccionTiempo = document.getElementById("tiempoJuego").value;
+var eleccionTiempo = document.getElementById("tiempoJuego");
 var tiempodeJuego = 0;
 var seleccionando = false;
 var palabraFormada = [];
 var puntos = 0;
-let palabrasEncontradas = [];
+var palabrasEncontradas = [];
 var modalFinDeJuego = document.getElementById("modalFinalPartida");
-var marcadores = document.getElementById("marcadores")
+var marcadores = document.getElementById("marcadores");
 
 function validarNombre() {
-    var inputNombre = document.getElementById("nombreJugador").value;
-
-    if (inputNombre.length >= 3) {
+    if (inputNombre.value.length >= 3) {
         document.getElementById("mensaje").textContent = "";
     } else {
         document.getElementById("mensaje").textContent = "El nombre debe tener al menos 3 caracteres.";
@@ -23,9 +21,7 @@ function validarNombre() {
     validarBoton();
 }
 function validarBoton() {
-    var inputNombre = document.getElementById("nombreJugador").value;
-    var eleccionTiempo = document.getElementById("tiempoJuego").value;
-    if (inputNombre.length >= 3 && eleccionTiempo !== "") {
+    if (inputNombre.value.length >= 3 && eleccionTiempo.value !== "") {
         btnIngresar.disabled = false;
     } else {
         btnIngresar.disabled = true;
@@ -34,9 +30,8 @@ function validarBoton() {
 
 
 function recibirNombre() {
-    var inputNombre = document.getElementById("nombreJugador").value;
-    var saludoJugador = document.getElementById("saludoJugador")
-    saludoJugador.innerHTML = `¡A jugar ${inputNombre}!`
+    var saludoJugador = document.getElementById("saludoJugador");
+    saludoJugador.innerHTML = "¡A jugar " + inputNombre.value + "!";
 }
 
 function abrirJuego() {
@@ -47,12 +42,12 @@ function abrirJuego() {
     iniciarTemporizador(tiempodeJuego);
 }
 
-btnIngresar.addEventListener("click", abrirJuego)
+btnIngresar.addEventListener("click", abrirJuego);
 
 
 function iniciarTemporizador(duracion) {
     var tiempoRestante = duracion;
-    var intervalo = setInterval(() => {
+    var intervalo = setInterval(function () {
         var minutos = Math.floor(tiempoRestante / 60);
         var segundos = tiempoRestante % 60;
 
@@ -61,7 +56,7 @@ function iniciarTemporizador(duracion) {
             (segundos < 10 ? "0" + segundos : segundos);
 
         if (tiempoRestante <= 10) {
-            temporizador.style.color = "red" //TODO:Ponerlo en CSS
+            temporizador.style.color = "red"; //TODO: Ponerlo en CSS
         }
         if (tiempoRestante <= 0) {
             clearInterval(intervalo);
@@ -76,24 +71,24 @@ function iniciarTemporizador(duracion) {
 function eleccionTiempoJuego() {
     eleccionTiempo = document.getElementById("tiempoJuego").value;
 
-    if (eleccionTiempo == "1") {
+    if (eleccionTiempo === "1") {
         tiempodeJuego = 10;
-    } else if (eleccionTiempo == "2") {
+    } else if (eleccionTiempo === "2") {
         tiempodeJuego = 120;
-    } else if (eleccionTiempo == "3") {
+    } else if (eleccionTiempo === "3") {
         tiempodeJuego = 180;
     }
     validarBoton();
 }
 
 function asignarLetrasAleatorias() {
-    marcadores.style.display = "block"
+    marcadores.style.display = "block";
 
-    const letras = "TOOh";
-    const botones = document.querySelectorAll(".gridBoogle .item button");
+    var letras = "TOOh";
+    var botones = document.querySelectorAll(".gridBoogle .item button");
 
-    botones.forEach(boton => {
-        const letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
+    botones.forEach(function (boton) {
+        var letraAleatoria = letras[Math.floor(Math.random() * letras.length)];
         boton.textContent = letraAleatoria;
         boton.classList.remove("seleccionado");
 
@@ -108,26 +103,26 @@ function asignarLetrasAleatorias() {
 function esAdyacente(botonActual) {
     if (!ultimaLetraSeleccionada) return true;
 
-    const grid = document.querySelector(".gridBoogle");
-    const botones = Array.from(grid.querySelectorAll(".item button"));
+    var grid = document.querySelector(".gridBoogle");
+    var botones = Array.from(grid.querySelectorAll(".item button"));
 
-    const indexActual = botones.indexOf(botonActual);
-    const indexUltimo = botones.indexOf(ultimaLetraSeleccionada);
+    var indexActual = botones.indexOf(botonActual);
+    var indexUltimo = botones.indexOf(ultimaLetraSeleccionada);
 
-    const filaActual = Math.floor(indexActual / 4);
-    const colActual = indexActual % 4;
-    const filaUltimo = Math.floor(indexUltimo / 4);
-    const colUltimo = indexUltimo % 4;
+    var filaActual = Math.floor(indexActual / 4);
+    var colActual = indexActual % 4;
+    var filaUltimo = Math.floor(indexUltimo / 4);
+    var colUltimo = indexUltimo % 4;
 
-    const filaDiff = Math.abs(filaActual - filaUltimo);
-    const colDiff = Math.abs(colActual - colUltimo);
+    var filaDiff = Math.abs(filaActual - filaUltimo);
+    var colDiff = Math.abs(colActual - colUltimo);
 
     return (filaDiff <= 1 && colDiff <= 1);
 }
 
 function letrasElegidas(event) {
     if (event.target.tagName === "BUTTON") {
-        const boton = event.target;
+        var boton = event.target;
 
         if (!seleccionando) { // Si no está activada la selección de letra
             seleccionando = true;
@@ -152,7 +147,7 @@ function letrasElegidas(event) {
 
 function letraHover(event) {
     if (event.target.tagName === "BUTTON" && seleccionando) { //event.target.tagName === "BUTTON" Significa que verifica si se hizo click sobre un boton.
-        const boton = event.target;
+        var boton = event.target;
 
         if (!boton.classList.contains("seleccionado") && esAdyacente(boton)) {
             boton.classList.add("seleccionado"); // Agregar letra a la palabra formada
@@ -163,11 +158,12 @@ function letraHover(event) {
         }
     }
 }
+
 document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
 document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
 
 function limpiarSeleccion() {
-    document.querySelectorAll(".gridBoogle .item button").forEach(boton => {
+    document.querySelectorAll(".gridBoogle .item button").forEach(function (boton) {
         boton.classList.remove("seleccionado");
     });
     palabraFormada = "";
@@ -183,28 +179,28 @@ async function verificarPalabraExistente(palabra) {
     }
 
     try {
-        const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`;
-        const response = await fetch(url);
-        const data = await response.json();
+        var url = `https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`;
+        var response = await fetch(url);
+        var data = await response.json();
 
         if (data && data.length > 0) {
-            const palabraApi = data[0].word; // Esto se hace porque sino no cuenta la longitud de la palabra obtenida de la API
-            const longitudPalabra = palabraApi.length; // Calcula la longitud de la palabra obtenida
+            var palabraApi = data[0].word; // Esto se hace porque sino no cuenta la longitud de la palabra obtenida de la API
+            var longitudPalabra = palabraApi.length; // Calcula la longitud de la palabra obtenida
 
             if (longitudPalabra <= 2) {
                 document.querySelector(".palabraFormacion").textContent = `Palabra existente, pero demasiado corta: (+2 letras) ${palabra}`;
                 // Mostrar puntos obtenidos por esta palabra corta
                 actualizarPuntuacion(2);
             } else {
-                const puntosObtenidos = sumarPuntos(longitudPalabra);
+                var puntosObtenidos = sumarPuntos(longitudPalabra);
                 document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra} (${longitudPalabra} letras)`;
-                document.querySelector(".puntuacionActual").textContent = `Puntuacion: ${puntos}`;
+                document.querySelector(".puntuacionActual").textContent = `Puntuación: ${puntos}`;
                 agregarPalabraFormada(palabra, puntosObtenidos);
             }
         } else {
             puntos -= 1;
             actualizarPuntuacion();
-            document.querySelector(".palabraFormacion").textContent = `Palabra inexistente : ${palabra} (-1 punto) `;
+            document.querySelector(".palabraFormacion").textContent = `Palabra inexistente: ${palabra} (-1 punto) `;
         }
     } catch (error) {
         document.querySelector(".palabraFormacion").textContent = `ERROR: ${error.message}`;
@@ -212,7 +208,7 @@ async function verificarPalabraExistente(palabra) {
 }
 
 function sumarPuntos(longitud) {
-    let puntosObtenidos = 0;
+    var puntosObtenidos = 0;
     if (longitud === 3 || longitud === 4) {
         puntosObtenidos = 1;
     } else if (longitud === 5) {
@@ -229,14 +225,14 @@ function sumarPuntos(longitud) {
 }
 
 function actualizarPuntuacion() {
-    document.querySelector(".puntuacionActual").textContent = `Puntuacion: ${puntos}`;
+    document.querySelector(".puntuacionActual").textContent = `Puntuación: ${puntos}`;
 }
 
 function agregarPalabraFormada(palabra, puntosObtenidos) {
-    palabrasEncontradas.push(palabra);// Añadir palabra al array global
+    palabrasEncontradas.push(palabra); // Añadir palabra al array global
 
-    const palabrasEncontradasElemento = document.querySelector(".palabrasEncontradas");
-    const palabraElemento = document.createElement("p");
+    var palabrasEncontradasElemento = document.querySelector(".palabrasEncontradas");
+    var palabraElemento = document.createElement("p");
     palabraElemento.textContent = `${palabra} (${puntosObtenidos} puntos)`;
     palabrasEncontradasElemento.appendChild(palabraElemento);
 }
@@ -244,26 +240,26 @@ function agregarPalabraFormada(palabra, puntosObtenidos) {
 function finDePartida() {
     modalFinDeJuego.style.display = "block";
 
-    document.querySelector(".puntuacionFInal").textContent = `Su puntuacion es: ${puntos}`;
-    const palabrasElemento = document.querySelector(".palabrasFormadasFinal");
+    document.querySelector(".puntuacionFInal").textContent = `Su puntuación es: ${puntos}`;
+    var palabrasElemento = document.querySelector(".palabrasFormadasFinal");
     if (palabrasEncontradas.length > 0) {
-        palabrasElemento.innerHTML = `Palabras formadas:<br>${palabrasEncontradas.join('<br>')}`; //join('<br>') convierte el array en una cadena donde cada elemento está separado por un salto de línea HTML
+        palabrasElemento.innerHTML = `Palabras formadas:<br>${palabrasEncontradas.join('<br>')}`; // join('<br>') convierte el array en una cadena donde cada elemento está separado por un salto de línea HTML
     } else {
         palabrasElemento.innerHTML = 'No se encontraron palabras.';
     }
-    const minutos = Math.floor(tiempodeJuego / 60);
+    var minutos = Math.floor(tiempodeJuego / 60);
     document.querySelector(".tiempoJugado").textContent = `Tiempo jugado: ${minutos} minuto`;
 
-    const fechaActual = new Date().toLocaleString();
+    var fechaActual = new Date().toLocaleString();
     document.querySelector(".fechaPartida").textContent = `Fecha y hora de la partida: ${fechaActual}`;
-    const inputNombre = document.getElementById("nombreJugador").value;
+    var inputNombre = document.getElementById("nombreJugador").value;
 
-    const resultados = {
+    var resultados = {
         nombre: inputNombre,
         puntos: puntos,
         fecha: fechaActual
     };
-    const historialPartidas = JSON.parse(localStorage.getItem('historialPartidas')) || [];
+    var historialPartidas = JSON.parse(localStorage.getItem('historialPartidas')) || [];
     historialPartidas.push(resultados);
     localStorage.setItem('historialPartidas', JSON.stringify(historialPartidas));
 
@@ -273,22 +269,24 @@ function finDePartida() {
 function volverInicio() {
     modalInicio.style.display = "block";
     juego.style.display = "none";
-    marcadores.style.display = "none"
-    modalFinDeJuego.style.display = "none"
+    marcadores.style.display = "none";
+    modalFinDeJuego.style.display = "none";
 
     document.querySelector(".palabrasEncontradas").textContent = '';
-    puntos = 0
+    puntos = 0;
     actualizarPuntuacion();
 }
-document.querySelector(".btnVolverAJugar").addEventListener("click", volverInicio)
+document.querySelector(".btnVolverAJugar").addEventListener("click", volverInicio);
 
 function mostrarHistorialPartidas() {
-    const historialPartidas = JSON.parse(localStorage.getItem('historialPartidas')) || [];
-    const historialElemento = document.querySelector(".historialPartidas");
+    var historialPartidas = JSON.parse(localStorage.getItem('historialPartidas')) || [];
+    var historialElemento = document.querySelector(".historialPartidas");
 
     if (historialPartidas.length > 0) {
-        historialPartidas.sort((a, b) => b.puntos - a.puntos); //Ordenamos de mayor a menor.
-        historialElemento.innerHTML = historialPartidas.map(partida => {
+        historialPartidas.sort(function (a, b) {
+            return b.puntos - a.puntos;
+        }); // Ordenamos de mayor a menor
+        historialElemento.innerHTML = historialPartidas.map(function (partida) {
             return `<p>Nombre: ${partida.nombre}, Puntos: ${partida.puntos}, Fecha: ${partida.fecha}</p>`;
         }).join('');
     } else {
