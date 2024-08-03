@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boogle - Contacto</title>
+</head>
+
+<body>
+    <form action="mailto:tu-email@ejemplo.com" method="get" enctype="text/plain">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" class="nombre" required> <br>
+        <div id="nombreError" class="error"></div>
+
+
+        <label for="" class="email">Email</label>
+        <input type="email" id="email" class="email" required> <br>
+        <div id="emailError" class="error"></div>
+
+
+        <label for="message">Mensaje:</label><br>
+        <textarea id="mensaje" name="mensaje" rows="4" cols="50" required></textarea><br><br>
+        <div id="mensajeError" class="error"></div>
+
+        <input type="submit" value="Enviar" id="btnEnviar">
+        <div id="errorClick" class="error"></div>
+    </form>
+
+    <a href="index.html">Volver</a>
+
+    <script src="contact.js"></script>
+
+</body>
+
+</html>
