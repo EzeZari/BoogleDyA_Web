@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styleMobile.css">
   <title>Boogle</title>
 </head>
 
@@ -43,31 +44,36 @@
       <div class="item"><button></button></div>
       <div class="item"><button></button></div>
     </div>
-    <button onclick="asignarLetrasAleatorias()">Rotar</button>
+    <button class="btnRotar" onclick="asignarLetrasAleatorias()">Rotar</button>
   </div>
 
+
+  <div class="temporizador" id="temporizador">02:00</div>
+  <div class="puntuacionActual"> Puntuacion: <span class="numPuntuacion">0</span> </div>
+
   <div class="marcadores" id="marcadores">
-    <div class="temporizador" id="temporizador">02:00</div>
-    <div class="ultimasPartidas"></div>
-    <div class="puntuacionActual">
-      Puntuacion: <span class="numPuntuacion">0</span>
+    <div class="palabraFormacion"></div> <br>
+    <div class="marcoPalabrasEncontradas">
+      <span>Palabras /Puntos</span>
     </div>
-    <div class="palabraFormacion"></div>
-    <div class="palabrasEncontradas">
-      <div class="marcoPalabrasEncontradas"><span>Palabras</span><span> Puntos</span></div>
-    </div>
+    <div class="palabrasEncontradas"></div>
   </div>
 
   <div class="modalFinalPartida" id="modalFinalPartida">
     <h1 class="puntuacionFInal">Su puntuacion es: </h1>
-    <p class="palabrasFormadasFinal">Palabraas formadas:</p>
+    <p class="palabrasFormadasFinal">Palabras formadas:</p>
     <p class="tiempoJugado">Tiempo jugado: </p>
     <div class="fechaPartida"></div>
     <button class="btnVolverAJugar">Volver a Jugar</button>
   </div>
 
-  <div class="historialPartidas">
-    <button class="btnhistorialPartidas">Historial de partidas</button>
+  <button id="btnHistorial">Mostrar Historial</button>
+  <div id="modalHistorial" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Historial de Partidas</h2>
+      <div class="historialPartidas"></div>
+    </div>
   </div>
 
   <div class="formularioContacto">

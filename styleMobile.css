@@ -1,0 +1,32 @@
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+
+    .header {
+        font-size: 20px;
+    }
+
+    .button {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .temporizador {
+        display: block;
+        position: static;
+        font-size: 16px;
+        margin-bottom: 5px;
+        right: auto;
+        top: auto;
+    }
+
+    .puntuacionActual {
+        display: block;
+        position: static;
+        font-size: 16px;
+        margin-bottom: 5px;
+        right: auto;
+        top: auto;
+    }
+}

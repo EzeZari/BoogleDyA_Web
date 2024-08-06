@@ -1,52 +1,370 @@
-* {
-    background-color: white;
-}
-
-.juegoBoogle {
-    /* display: none; */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
+/* TODO: MODAL INICIO */
 .modalInicio {
-    /* display: none; */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    z-index: 1000;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modalInicio h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.modalInicio h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #666666;
+}
+
+.modalInicio input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.modalInicio input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.modalInicio select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.modalInicio button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modalInicio button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.modalInicio button:not(:disabled):hover {
+    background-color: #0056b3;
+}
+
+#mensaje {
+    color: #ff0000;
+}
+
+
+/*TODO: JUEGO BOOGLE*/
+
+.juegoBoogle {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#saludoJugador {
+    text-align: center;
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 20px;
 }
 
 .gridBoogle {
     display: flex;
     flex-wrap: wrap;
     width: 400px;
+    margin-bottom: 20px;
+    margin: 0;
 }
 
 .item {
     flex: 1 0 25%;
-    /* Hace que cada botón ocupe el 25% del ancho del contenedor (4 botones por fila) */
     box-sizing: border-box;
     padding: 5px;
-}
-
-#mensaje {
-    color: red;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .item button {
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
 }
 
-.seleccionado {
-    background-color: yellow;
-    /* Color para las letras seleccionadas */
+.item button:hover {
+    background-color: #0056b3;
+}
+
+.juegoBoogle button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 24px;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.juegoBoogle button:hover {
+    background-color: #0056b3;
+}
+
+.btnRotar {
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.btnRotar:hover {
+    background-color: #0056b3;
+}
+
+.juegoBoogle .btnRotar {
+    margin: 20px auto;
+}
+
+.item button.seleccionado {
+    background-color: #004080;
+}
+
+/*TODO: MARCADORES*/
+
+.temporizador {
+    display: none;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    position: fixed;
+    right: 550px;
+    top: 300px;
+
+}
+
+.puntuacionActual {
+    display: none;
+    font-size: 18px;
+    margin-bottom: 10px;
+    position: fixed;
+    right: 555px;
+    top: 350px;
+    font-weight: bold;
 }
 
 .palabraFormacion {
-    font-size: 1.5rem;
     margin-top: 20px;
+    font-size: 20px;
+    color: #007bff;
+    font-weight: bold;
 }
 
-.modalFinalPartida {
+.palabrasEncontradas {
+    margin-top: 20px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.marcoPalabrasEncontradas {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.marcadores {
     display: none;
+}
+
+/*TODO: MODAL FIN DE JUEGO */
+
+.modalFinalPartida {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    z-index: 1000;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    display: none;
+}
+
+.modalFinalPartida h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.modalFinalPartida p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333333;
+}
+
+.modalFinalPartida .fechaPartida {
+    font-size: 16px;
+    color: #666666;
+    margin-bottom: 20px;
+}
+
+.modalFinalPartida button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modalFinalPartida button:hover {
+    background-color: #0056b3;
+}
+
+.modalFinalPartida button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.formularioContacto a {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.linkGitHub a {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #007bff;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    color: #333333;
+    position: relative;
+}
+
+.close {
+    color: #007bff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #0056b3;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.historialPartidas {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 20px;
+    text-align: left;
+    color: #333333;
+}
+
+#btnHistorial {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#btnHistorial:hover {
+    background-color: #0056b3;
 }

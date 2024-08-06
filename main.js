@@ -10,7 +10,10 @@ var palabraFormada = [];
 var puntos = 0;
 var palabrasEncontradas = [];
 var modalFinDeJuego = document.getElementById("modalFinalPartida");
-var marcadores = document.getElementById("marcadores");
+var marcadores = document.querySelector(".marcadores");
+var temporizador = document.querySelector(".temporizador");
+var puntuacionActual = document.querySelector(".puntuacionActual"); 
+var btnHistorial = document.querySelector(".btnHistorial")
 
 function validarNombre() {
     if (inputNombre.value.length >= 3) {
@@ -37,6 +40,7 @@ function recibirNombre() {
 function abrirJuego() {
     modalInicio.style.display = "none";
     juego.style.display = "block";
+    //btnHistorial.style.disabled = "none"; Se buguea.
     recibirNombre();
     asignarLetrasAleatorias();
     iniciarTemporizador(tiempodeJuego);
@@ -52,11 +56,11 @@ function iniciarTemporizador(duracion) {
         var segundos = tiempoRestante % 60;
 
         temporizador.textContent =
-            (minutos < 10 ? "0" + minutos : minutos) + ":" +
+            " Tiempo: "+ (minutos < 10 ? "0" + minutos : minutos) + ":" +
             (segundos < 10 ? "0" + segundos : segundos);
 
         if (tiempoRestante <= 10) {
-            temporizador.style.color = "red"; //TODO: Ponerlo en CSS
+            temporizador.style.color = "red"; 
         }
         if (tiempoRestante <= 0) {
             clearInterval(intervalo);
@@ -72,7 +76,7 @@ function eleccionTiempoJuego() {
     eleccionTiempo = document.getElementById("tiempoJuego").value;
 
     if (eleccionTiempo === "1") {
-        tiempodeJuego = 10;
+        tiempodeJuego = 60;
     } else if (eleccionTiempo === "2") {
         tiempodeJuego = 120;
     } else if (eleccionTiempo === "3") {
@@ -83,8 +87,11 @@ function eleccionTiempoJuego() {
 
 function asignarLetrasAleatorias() {
     marcadores.style.display = "block";
+    temporizador.style.display = "block"
+    puntuacionActual.style.display = "block"
+    
 
-    var letras = "TOOh";
+    var letras = "AAABCDEEEFGHIIIJKLMNOOOPQRSTUUUVWXYZ";
     var botones = document.querySelectorAll(".gridBoogle .item button");
 
     botones.forEach(function (boton) {
@@ -124,18 +131,16 @@ function letrasElegidas(event) {
     if (event.target.tagName === "BUTTON") {
         var boton = event.target;
 
-        if (!seleccionando) { // Si no está activada la selección de letra
+        if (!seleccionando) {
             seleccionando = true;
             boton.classList.add("seleccionado");
             palabraFormada = boton.textContent;
             ultimaLetraSeleccionada = boton;
-
         } else if (boton.classList.contains("seleccionado")) {
             seleccionando = false;
             verificarPalabraExistente(palabraFormada);
             limpiarSeleccion();
-
-        } else if (esAdyacente(boton)) { // Verificar si el botón es adyacente
+        } else if (esAdyacente(boton)) {
             boton.classList.add("seleccionado");
             palabraFormada += boton.textContent;
             ultimaLetraSeleccionada = boton;
@@ -146,11 +151,11 @@ function letrasElegidas(event) {
 }
 
 function letraHover(event) {
-    if (event.target.tagName === "BUTTON" && seleccionando) { //event.target.tagName === "BUTTON" Significa que verifica si se hizo click sobre un boton.
+    if (event.target.tagName === "BUTTON" && seleccionando) {
         var boton = event.target;
 
         if (!boton.classList.contains("seleccionado") && esAdyacente(boton)) {
-            boton.classList.add("seleccionado"); // Agregar letra a la palabra formada
+            boton.classList.add("seleccionado");
             palabraFormada += boton.textContent;
             ultimaLetraSeleccionada = boton;
 
@@ -161,6 +166,15 @@ function letraHover(event) {
 
 document.querySelector(".gridBoogle").addEventListener("click", letrasElegidas);
 document.querySelector(".gridBoogle").addEventListener("mouseover", letraHover);
+
+// Agregar soporte para touch en dispositivos móviles
+document.querySelector(".gridBoogle").addEventListener("touchstart", letrasElegidas);
+document.querySelector(".gridBoogle").addEventListener("touchmove", letraHover);
+
+// Evitamos el comportamiento predeterminado del navegador para eventos táctiles
+document.querySelector(".gridBoogle").addEventListener("touchend", function (event) {
+    event.preventDefault();
+});
 
 function limpiarSeleccion() {
     document.querySelectorAll(".gridBoogle .item button").forEach(function (boton) {
@@ -239,6 +253,10 @@ function agregarPalabraFormada(palabra, puntosObtenidos) {
 
 function finDePartida() {
     modalFinDeJuego.style.display = "block";
+    juego.style.display = "none"
+    marcadores.style.display = "none"
+    temporizador.style.display="none"
+    puntuacionActual.style.display = "none"
 
     document.querySelector(".puntuacionFInal").textContent = `Su puntuación es: ${puntos}`;
     var palabrasElemento = document.querySelector(".palabrasFormadasFinal");
@@ -270,6 +288,8 @@ function volverInicio() {
     modalInicio.style.display = "block";
     juego.style.display = "none";
     marcadores.style.display = "none";
+    temporizador.style.display = "none";
+    puntuacionActual.style.display = "none"
     modalFinDeJuego.style.display = "none";
 
     document.querySelector(".palabrasEncontradas").textContent = '';
@@ -278,7 +298,17 @@ function volverInicio() {
 }
 document.querySelector(".btnVolverAJugar").addEventListener("click", volverInicio);
 
-function mostrarHistorialPartidas() {
+document.getElementById("btnHistorial").onclick = function () {
+    // Obtener el modal
+    var modal = document.getElementById("modalHistorial");
+
+    modalInicio.style.display = "none";
+    juego.style.display = "none";
+    marcadores.style.display = "none";
+    modalFinDeJuego.style.display = "none";
+    temporizador.style.display="none";
+    puntuacionActual.style.display = "none"
+
     var historialPartidas = JSON.parse(localStorage.getItem('historialPartidas')) || [];
     var historialElemento = document.querySelector(".historialPartidas");
 
@@ -287,11 +317,20 @@ function mostrarHistorialPartidas() {
             return b.puntos - a.puntos;
         }); // Ordenamos de mayor a menor
         historialElemento.innerHTML = historialPartidas.map(function (partida) {
-            return `<p>Nombre: ${partida.nombre}, Puntos: ${partida.puntos}, Fecha: ${partida.fecha}</p>`;
+            return `<p><b>Nombre:</b> ${partida.nombre},  <b>Puntos:</b> ${partida.puntos},  <b>Fecha:</b> ${partida.fecha}</p>`;
         }).join('');
     } else {
         historialElemento.innerHTML = 'No hay partidas guardadas.';
     }
-}
+
+    modal.style.display = "block";
+    var closeBtn = document.querySelector(".close");
+
+    closeBtn.onclick = function () {
+        modal.style.display = "none";
+        modalInicio.style.display = "block";
+
+    };
+};
 
 document.querySelector(".btnhistorialPartidas").addEventListener("click", mostrarHistorialPartidas);
