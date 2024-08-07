@@ -14,6 +14,7 @@ var marcadores = document.querySelector(".marcadores");
 var temporizador = document.querySelector(".temporizador");
 var puntuacionActual = document.querySelector(".puntuacionActual"); 
 var btnHistorial = document.querySelector(".btnHistorial")
+var btnRotar = document.querySelector(".btnRotar");
 
 function validarNombre() {
     if (inputNombre.value.length >= 3) {
@@ -23,6 +24,8 @@ function validarNombre() {
     }
     validarBoton();
 }
+inputNombre.addEventListener("input", validarNombre);
+
 function validarBoton() {
     if (inputNombre.value.length >= 3 && eleccionTiempo.value !== "") {
         btnIngresar.disabled = false;
@@ -30,7 +33,6 @@ function validarBoton() {
         btnIngresar.disabled = true;
     }
 }
-
 
 function recibirNombre() {
     var saludoJugador = document.getElementById("saludoJugador");
@@ -40,14 +42,12 @@ function recibirNombre() {
 function abrirJuego() {
     modalInicio.style.display = "none";
     juego.style.display = "block";
-    //btnHistorial.style.disabled = "none"; Se buguea.
+    btnHistorial.style.display = "none"; 
     recibirNombre();
     asignarLetrasAleatorias();
     iniciarTemporizador(tiempodeJuego);
 }
-
 btnIngresar.addEventListener("click", abrirJuego);
-
 
 function iniciarTemporizador(duracion) {
     var tiempoRestante = duracion;
@@ -84,6 +84,7 @@ function eleccionTiempoJuego() {
     }
     validarBoton();
 }
+eleccionTiempo.addEventListener("change", eleccionTiempoJuego);
 
 function asignarLetrasAleatorias() {
     marcadores.style.display = "block";
@@ -106,6 +107,7 @@ function asignarLetrasAleatorias() {
     seleccionando = false;
     limpiarSeleccion();
 }
+btnRotar.addEventListener("click",asignarLetrasAleatorias)
 
 function esAdyacente(botonActual) {
     if (!ultimaLetraSeleccionada) return true;
@@ -182,7 +184,7 @@ function limpiarSeleccion() {
     });
     palabraFormada = "";
     ultimaLetraSeleccionada = null;
-    document.querySelector(".palabraFormacion").textContent = palabraFormada;
+    //document.querySelector(".palabraFormacion").textContent = palabraFormada;
 }
 
 async function verificarPalabraExistente(palabra) {
@@ -202,19 +204,24 @@ async function verificarPalabraExistente(palabra) {
             var longitudPalabra = palabraApi.length; // Calcula la longitud de la palabra obtenida
 
             if (longitudPalabra <= 2) {
-                document.querySelector(".palabraFormacion").textContent = `Palabra existente, pero demasiado corta: (+2 letras) ${palabra}`;
+                document.querySelector(".palabraFormacion").textContent = ` ${palabra}`;
+                document.querySelector(".puntuacionPalabra").textContent = `Palabra existente, pero demasiado corta: ${palabra}`;
                 // Mostrar puntos obtenidos por esta palabra corta
                 actualizarPuntuacion(2);
             } else {
                 var puntosObtenidos = sumarPuntos(longitudPalabra);
-                document.querySelector(".palabraFormacion").textContent = `Palabra Correcta: ${palabra} (${longitudPalabra} letras)`;
+                document.querySelector(".palabraFormacion").textContent = ` ${palabra}`;
+                document.querySelector(".puntuacionPalabra").textContent = `Palabra Correcta: ${palabra} (${longitudPalabra} letras)`;
                 document.querySelector(".puntuacionActual").textContent = `Puntuación: ${puntos}`;
+                document.querySelector(".puntuacionPalabra").style.color = 'green';
                 agregarPalabraFormada(palabra, puntosObtenidos);
             }
         } else {
             puntos -= 1;
             actualizarPuntuacion();
-            document.querySelector(".palabraFormacion").textContent = `Palabra inexistente: ${palabra} (-1 punto) `;
+            document.querySelector(".palabraFormacion").textContent = ` ${palabra}`;
+            document.querySelector(".puntuacionPalabra").textContent = `Palabra inexistente: ${palabra} (-1 punto) `;
+            document.querySelector(".puntuacionPalabra").style.color = 'red';
         }
     } catch (error) {
         document.querySelector(".palabraFormacion").textContent = `ERROR: ${error.message}`;
@@ -257,6 +264,7 @@ function finDePartida() {
     marcadores.style.display = "none"
     temporizador.style.display="none"
     puntuacionActual.style.display = "none"
+    btnHistorial.style.display = "block"; 
 
     document.querySelector(".puntuacionFInal").textContent = `Su puntuación es: ${puntos}`;
     var palabrasElemento = document.querySelector(".palabrasFormadasFinal");

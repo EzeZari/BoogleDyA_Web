@@ -94,7 +94,7 @@ body {
     align-items: center;
     margin: 20px;
     padding: 20px;
-    background-color: #f0f8ff;
+    background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -194,43 +194,55 @@ body {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    position: fixed;
-    right: 550px;
-    top: 300px;
+}
 
+.contenedorJuego {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+}
+
+.tiempoPuntuacion {
+    background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
 }
 
 .puntuacionActual {
     display: none;
     font-size: 18px;
-    margin-bottom: 10px;
-    position: fixed;
-    right: 555px;
-    top: 350px;
     font-weight: bold;
 }
 
 .palabraFormacion {
-    margin-top: 20px;
     font-size: 20px;
     color: #007bff;
     font-weight: bold;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.puntuacionPalabra {
+    font-size: 18px;
+    margin-bottom: 10px;
+    
 }
 
 .palabrasEncontradas {
-    margin-top: 20px;
     text-align: left;
     font-size: 16px;
 }
 
 .marcoPalabrasEncontradas {
     display: flex;
-    justify-content: space-between;
     font-weight: bold;
 }
 
 .marcadores {
     display: none;
+    padding-right: 20px;
 }
 
 /*TODO: MODAL FIN DE JUEGO */

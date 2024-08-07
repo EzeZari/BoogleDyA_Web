@@ -12,6 +12,11 @@
         padding: 12px;
     }
 
+    .contenedorJuego {
+        display: block;
+        text-align: center;
+    }
+
     .temporizador {
         display: block;
         position: static;
@@ -28,5 +33,11 @@
         margin-bottom: 5px;
         right: auto;
         top: auto;
+    }
+
+    .tiempoPuntuacion {
+        background-color: transparent;
+        box-shadow: none;
+        padding: 10px;
     }
 }

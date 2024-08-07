@@ -13,9 +13,9 @@
   <div class="modalInicio" id="modalInicio">
     <h1>Bienvenido a Boogle</h1>
     <h2>Ingresa tu nombre</h2>
-    <input type="text" id="nombreJugador" oninput="validarNombre()" />
+    <input type="text" id="nombreJugador" />
     <p id="mensaje"></p>
-    <select name="tiempoJuego" id="tiempoJuego" onchange="eleccionTiempoJuego()">
+    <select name="tiempoJuego" id="tiempoJuego">
       <option value="" disabled selected>Selecciona el tiempo</option>
       <option value="1">1 minuto</option>
       <option value="2">2 minutos</option>
@@ -24,38 +24,38 @@
     <button id="btnIngresar" disabled>Jugar</button>
   </div>
 
-  <div class="juegoBoogle" id="juegoBoogle">
-    <h1 id="saludoJugador"></h1>
-    <div class="gridBoogle" id="gridBoogle">
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
-      <div class="item"><button></button></div>
+  <div class="contenedorJuego">
+    <div class="juegoBoogle" id="juegoBoogle">
+      <h1 id="saludoJugador"></h1>
+      <div class="gridBoogle" id="gridBoogle">
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+        <div class="item"><button></button></div>
+      </div>
+      <button class="btnRotar">Rotar</button>
     </div>
-    <button class="btnRotar" onclick="asignarLetrasAleatorias()">Rotar</button>
+    <div class="tiempoPuntuacion">
+      <div class="temporizador" id="temporizador"></div>
+      <div class="puntuacionActual"> Puntuacion: <span class="numPuntuacion">0</span> </div>
+    </div>
   </div>
 
-
-  <div class="temporizador" id="temporizador">02:00</div>
-  <div class="puntuacionActual"> Puntuacion: <span class="numPuntuacion">0</span> </div>
-
   <div class="marcadores" id="marcadores">
-    <div class="palabraFormacion"></div> <br>
-    <div class="marcoPalabrasEncontradas">
-      <span>Palabras /Puntos</span>
-    </div>
+    <div class="palabraFormacion"></div> 
+    <div class="puntuacionPalabra"></div>
     <div class="palabrasEncontradas"></div>
   </div>
 
@@ -67,7 +67,7 @@
     <button class="btnVolverAJugar">Volver a Jugar</button>
   </div>
 
-  <button id="btnHistorial">Mostrar Historial</button>
+  <button id="btnHistorial" class="btnHistorial">Mostrar Historial</button>
   <div id="modalHistorial" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
